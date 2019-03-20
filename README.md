@@ -1,4 +1,10 @@
 # flib_http_adapter
 
-A Flutter http adapter library.
+# install
+```
+  flib_http_adapter:
+    git:
+      url: git://github.com/zj565061763/flib_http_adapter
+      ref: master
+```
 
