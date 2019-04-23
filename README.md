@@ -1,6 +1,6 @@
 # flib_http_adapter
 
-# install
+## install
 ```
   flib_http_adapter:
     git:
