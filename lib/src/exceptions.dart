@@ -31,7 +31,18 @@ class FHttpResponseCodeException extends FHttpException {
     @required this.responseCode,
     this.responseString,
     String message,
-  }) : super(message);
+  })  : assert(responseCode != null),
+        super(message);
+
+  @override
+  String toString() {
+    final StringBuffer buffer = StringBuffer(super.toString());
+    buffer.write('\r\n');
+    buffer.write('code: ' + responseCode.toString());
+    buffer.write('\r\n');
+    buffer.write('content: ' + responseString);
+    return buffer.toString();
+  }
 }
 
 /// 解析服务端数据错误
@@ -42,4 +53,14 @@ class FHttpParseResponseException extends FHttpException {
     @required this.error,
     String message,
   }) : super(message);
+
+  @override
+  String toString() {
+    final StringBuffer buffer = StringBuffer(super.toString());
+    if (error != null) {
+      buffer.write('\r\n');
+      buffer.write(error.toString());
+    }
+    return buffer.toString();
+  }
 }
