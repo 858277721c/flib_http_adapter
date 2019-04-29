@@ -7,35 +7,23 @@ class FHttpException implements Exception {
 
   @override
   String toString() {
-    final String prefix = 'FHttpException';
-    return message == null ? prefix : prefix + ' ' + message;
+    final StringBuffer buffer = StringBuffer(runtimeType.toString());
+    if (message != null) {
+      buffer.write('\r\n');
+      buffer.write(message);
+    }
+    return buffer.toString();
   }
 }
 
 /// 请求超时
 class FHttpTimeoutException extends FHttpException {
   FHttpTimeoutException({String message}) : super(message);
-
-  @override
-  String toString() {
-    final StringBuffer buffer = StringBuffer(super.toString());
-    buffer.write('\r\n');
-    buffer.write('request timeout');
-    return buffer.toString();
-  }
 }
 
 /// 请求被取消
 class FHttpCancelException extends FHttpException {
   FHttpCancelException({String message}) : super(message);
-
-  @override
-  String toString() {
-    final StringBuffer buffer = StringBuffer(super.toString());
-    buffer.write('\r\n');
-    buffer.write('request cancelled');
-    return buffer.toString();
-  }
 }
 
 /// 服务端错误码
