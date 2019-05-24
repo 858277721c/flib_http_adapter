@@ -2,6 +2,12 @@ import 'package:meta/meta.dart';
 
 import 'exceptions.dart';
 
+enum FHttpMethod {
+  post,
+  get,
+  delete,
+}
+
 /// http请求返回信息
 class FHttpResponse<T> {
   final int code;
@@ -40,7 +46,11 @@ abstract class FHttpRequest<T> {
   void handleHttpException(dynamic e) {}
 }
 
-abstract class FHttpStringRequest extends FHttpRequest<String> {}
+abstract class FHttpStringRequest extends FHttpRequest<String> {
+  FHttpMethod getHttpMethod() {
+    return FHttpMethod.post;
+  }
+}
 
 abstract class FHttpModelRequest<T> extends FHttpStringRequest {
   /// 发起请求
