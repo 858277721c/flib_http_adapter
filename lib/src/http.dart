@@ -40,17 +40,21 @@ abstract class FHttpRequest<T> {
     return response;
   }
 
+  FHttpMethod getHttpMethod() {
+    return FHttpMethod.post;
+  }
+
+  String getHttpPath() {
+    return '';
+  }
+
   @protected
   Future<FHttpResponse<T>> toResponseImpl();
 
   void handleHttpException(dynamic e) {}
 }
 
-abstract class FHttpStringRequest extends FHttpRequest<String> {
-  FHttpMethod getHttpMethod() {
-    return FHttpMethod.post;
-  }
-}
+abstract class FHttpStringRequest extends FHttpRequest<String> {}
 
 abstract class FHttpModelRequest<T> extends FHttpStringRequest {
   /// 发起请求
