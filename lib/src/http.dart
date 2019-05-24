@@ -51,10 +51,12 @@ class FHttpRequestInfo {
 
   FHttpRequestInfo({
     this.path,
-    this.queryParams,
-    this.data,
+    Map<String, dynamic> queryParams,
+    dynamic data,
     this.method,
-  }) : assert(method != null);
+  })  : assert(method != null),
+        this.queryParams = queryParams ?? {},
+        this.data = data ?? {};
 }
 
 /// http请求返回信息
