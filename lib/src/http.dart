@@ -20,7 +20,15 @@ abstract class FHttpRequest<T> {
 
   /// 发起请求
   Future<FHttpResponse<T>> toResponse() async {
-    final FHttpResponse<T> response = await toResponseImpl();
+    FHttpResponse<T> response;
+
+    try {
+      response = await toResponseImpl();
+    } catch (e) {
+      handleHttpException(e);
+      throw e;
+    }
+
     assert(response != null);
     _response = response;
     return response;
@@ -28,6 +36,8 @@ abstract class FHttpRequest<T> {
 
   @protected
   Future<FHttpResponse<T>> toResponseImpl();
+
+  void handleHttpException(dynamic e) {}
 }
 
 abstract class FHttpStringRequest extends FHttpRequest<String> {}
