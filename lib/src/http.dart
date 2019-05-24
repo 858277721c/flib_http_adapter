@@ -40,7 +40,6 @@ abstract class FHttpAdapter {
 enum FHttpMethod {
   post,
   get,
-  delete,
 }
 
 /// http发起请求的一些信息
