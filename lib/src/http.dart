@@ -8,6 +8,19 @@ enum FHttpMethod {
   delete,
 }
 
+/// http发起请求的一些信息
+class FHttpRequestInfo {
+  final String path;
+  final Map<String, dynamic> params;
+  final FHttpMethod method;
+
+  FHttpRequestInfo({
+    this.path,
+    this.params,
+    this.method,
+  }) : assert(method != null);
+}
+
 /// http请求返回信息
 class FHttpResponse<T> {
   final int code;
@@ -28,8 +41,14 @@ abstract class FHttpRequest<T> {
   Future<FHttpResponse<T>> toResponse() async {
     FHttpResponse<T> response;
 
+    final FHttpRequestInfo requestInfo = FHttpRequestInfo(
+      path: getPath(),
+      params: getParams(),
+      method: getMethod(),
+    );
+
     try {
-      response = await toResponseImpl();
+      response = await toResponseImpl(requestInfo);
     } catch (e) {
       handleHttpException(e);
       throw e;
@@ -40,16 +59,21 @@ abstract class FHttpRequest<T> {
     return response;
   }
 
-  FHttpMethod getHttpMethod() {
+  /// 请求路径
+  String getPath() {
+    return null;
+  }
+
+  /// 请求参数
+  Map<String, dynamic> getParams();
+
+  /// 请求方法
+  FHttpMethod getMethod() {
     return FHttpMethod.post;
   }
 
-  String getHttpPath() {
-    return '';
-  }
-
   @protected
-  Future<FHttpResponse<T>> toResponseImpl();
+  Future<FHttpResponse<T>> toResponseImpl(FHttpRequestInfo request);
 
   void handleHttpException(dynamic e) {}
 }
